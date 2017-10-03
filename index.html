@@ -1,11 +1,11 @@
 <script src="https://unpkg.com/vue"></script>
 
 <div id="app">
-  <p>{{ message }}</p>
-  <ol>
-    <li v-for="item in menu">
-      {{ item.name }}
-    </li>
-  </ol>
+ <section-header></section-header>
+  <menu-item
+    v-for="item in menu"
+    v-bind:menu="item"
+    v-bind:key="item.id">
+  </menu-item>
 </div>
 <script src="app.js"></script>
