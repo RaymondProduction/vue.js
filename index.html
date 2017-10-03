@@ -1,4 +1,5 @@
 <script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
 <div id="app">
  <input v-model="message">
@@ -8,5 +9,6 @@
     v-bind:menu="item"
     v-bind:key="item.id">
   </menu-item>
+  <router-view></router-view> <!-- In this example, it is very important -->
 </div>
 <script src="app.js"></script>
