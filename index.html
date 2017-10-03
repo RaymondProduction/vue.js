@@ -1,7 +1,8 @@
 <script src="https://unpkg.com/vue"></script>
 
 <div id="app">
- <section-header></section-header>
+ <input v-model="message">
+ <section-header v-bind:name="message">></section-header>
   <menu-item
     v-for="item in menu"
     v-bind:menu="item"

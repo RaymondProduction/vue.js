@@ -1,9 +1,9 @@
-var App = {
-  section_header : 'Main'
-}
+// var App = {
+//   section_header : 'Main'
+// }
 Vue.component('section-header', {
+  props: ['name'],
   template: '<p>{{name}}</p>',
-  data: () => { return {name : App.section_header }},
 });
 Vue.component('menu-item', {
   props: ['menu'],
@@ -18,7 +18,5 @@ var app = new Vue({
       { name: 'Learn Vue' },
       { name: 'Build something awesome' }
     ]
-  }
+  },
 })
-
-
