@@ -19,7 +19,7 @@ Vue.component('section-header', {
 });
 Vue.component('menu-item', {
   props: ['menu'],
-  template: '<li>{{ menu.name }}</li>'
+  template: '<a v-bind:href="menu.path"> {{menu.name}} </a></li>'
 });
 var app = new Vue({
   el: '#app',
@@ -27,13 +27,9 @@ var app = new Vue({
   data: {
     message: 'Hello Vue.js!',
     menu: [
-      {id: 1, name: 'Learn JavaScript' },
-      {id: 2, name: 'Learn Vue' },
-      {id: 3, name: 'Build something awesome' }
+      {id: 1, path : "#about", name: 'Object-oriented programming' },
+      {id: 2, path : "#home", name: 'Structured programming' },
+      {id: 3, path : "#about",name: 'Procedural programming' }
     ],
   },
 })
-// const app = new Vue({
-//    el: '#app',
-//   router : router
-// })
