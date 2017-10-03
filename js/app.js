@@ -2,12 +2,13 @@
 //   section_header : 'Main'
 // }
 
-const NotFound = { template: '<p>Not Found</p>' }
-const Home = { template: '<p>Main</p>' }
-const About = { template: '<p>About</p>' }
+const oopPage = { template: '#oop' }
+const ppPage = { template: '#pp' }
+const spPage = { template: '#sp' }
 const routes = [
-  { path: '/home', component: Home },
-  { path: '/about', component: About }
+  { path: '/oop', component: oopPage },
+  { path: '/pp', component: ppPage },
+  { path: '/sp', component: spPage }
 ];
 const router = new VueRouter({
   routes
@@ -27,9 +28,9 @@ var app = new Vue({
   data: {
     message: 'Hello Vue.js!',
     menu: [
-      {id: 1, path : "#about", name: 'Object-oriented programming' },
-      {id: 2, path : "#home", name: 'Structured programming' },
-      {id: 3, path : "#about",name: 'Procedural programming' }
+      {id: 1, path : "#oop", name: 'Object-oriented programming' },
+      {id: 2, path : "#sp", name: 'Structured programming' },
+      {id: 3, path : "#pp",name: 'Procedural programming' }
     ],
   },
 })
