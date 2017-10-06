@@ -5,10 +5,12 @@
 const oopPage = { template: '#oop' }
 const ppPage = { template: '#pp' }
 const spPage = { template: '#sp' }
+const mainPage = { template: '<h1>Hello</h1>'}
 const routes = [
   { path: '/oop', component: oopPage },
   { path: '/pp', component: ppPage },
-  { path: '/sp', component: spPage }
+  { path: '/sp', component: spPage },
+  { path: '/', component: mainPage}
 ];
 const router = new VueRouter({
   routes

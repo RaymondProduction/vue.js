@@ -9,23 +9,24 @@
   </head>
   <body>
     <div id="app">
-      <input v-model="message">
-      <section-header v-bind:name="message"></section-header>
+      <header id="main_header">RAYMOND</header>
       <nav id="main_menu">
         <menu-item
           v-for="item in menu"
           v-bind:menu="item"
           v-bind:key="item.id">
         </menu-item>
+        <input v-model="message">
+        <section-header v-bind:name="message"></section-header>
       </nav>
       <section id="main_section">
         <router-view></router-view> <!-- In this example, it is very important -->
       </section>
     </div>
+    <footer id="main_footer">
+       RaymondProduction © 2017
+    </footer>
   </body>
-  <footer id="main_footer">
-     RaymondProduction © 2017
-  </footer>
   <script type="text/template" id="oop">
     <p><b>Object-oriented programming (OOP)</b> is a programming paradigm based on the concept of "objects", which may contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods. A feature of objects is that an object's procedures can access and often modify the data fields of the object with which they are associated (objects have a notion of "this" or "self"). In OOP, computer programs are designed by making them out of objects that interact with one another. There is significant diversity of OOP languages, but the most popular ones are class-based, meaning that objects are instances of classes, which typically also determine their type.</p>
   </script>
