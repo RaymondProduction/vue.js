@@ -7,9 +7,10 @@
 }*/
 body {
  float: center;
- width: 980px;
+/* width: 980px; */
  margin: auto; /* Выравниваем по центру */
- border: solid 1px black;
+ /*border: solid 1px black; */
+ background: black;
 }
 
 
@@ -67,11 +68,25 @@ h5 {
     font-size:14pt;
     font-weight: 400;
 }
-#app1 {
- float: center;
- width: 980px;
- margin: auto; /* Выравниваем по центру */
- border: solid 1px black;
+
+.table-menu {
+   border: solid 1px black;
+   height: 38px;
+   border: 0px;
+}
+.td {
+  text-align: center;
+  background-image: url('bgmenu.png');
+}
+.a {
+   text-decoration: none;
+}
+#app {
+  border: none;
+  width: 800px;
+  background: #ccc;
+  float: center;
+  margin: auto;
 }
 #wrapper {
  float: center;
@@ -80,17 +95,19 @@ h5 {
  border: solid 1px black;
 }
 #main_header {
-  font-family:verdana, cambria, helvetica, sans-serif;
-  background: linear-gradient(to top, #fefcea, #f1da36);
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  background: black;
   border: solid 0px black;
-  font-size:20pt;
+  font-size: 24pt;
+  color: #97D435;
+  font-weight: 600; /* Жирное начертание */
   text-align: center;
 }
 #main_menu {
   font-family:verdana, cambria, helvetica, sans-serif;
-  height: 100px;
+  /*height: 100px;
   width: 256px;
-  background: #D7EAF7;
+  */background: #D7EAF7;
   float: left;
   padding: 5px, 15px;
   text-align:left;
@@ -104,13 +121,12 @@ h5 {
     font: blod 14px verdana, sans-serif;
 }
 #main_section{
-
     border: solid 0px black;
     position: relative;
     background: #FFFFFF;
     float: left;
-    padding: 10px;
-    width: 704px;
+    padding-top: 10px;
+    width: 800 px;
     min-height: 600px;
     margin: 0px;
     text-align:center;
@@ -126,7 +142,7 @@ h5 {
     clear: both;
     background: #CCCCFF;
     text-align: center;
-    width: 980px;
+    width: 800px;
     height: 46px;
     padding-top: 10px;
    /* border: solid 1px black; */
