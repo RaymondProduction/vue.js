@@ -23,7 +23,7 @@ Vue.component('section-header', {
 Vue.component('menu-main',{
   props: ['menu','position'],
   template: '<table class="table-menu"><tr>'+
-            '  <td class="td" v-for="item in menu.list"  v-if="menu.position != item.path" v-bind:width = "item.width"> <router-link v-bind:to="item.path"> {{item.name}} </router-link></td>'+
+            '  <td class="td" v-for="item in menu.list" v-bind:width = "item.width"> <router-link v-bind:to="item.path"> {{item.name}} </router-link></td>'+
           //  '  <td class="td" style="background: #97D435;" v-for="item in menu.list"  v-if="menu.position == item.path" v-bind:width = "item.width"><a  class="a" v-bind:href="item.path"> {{item.name}} </a></td>'+
             '</tr></table>',
 });
@@ -35,12 +35,12 @@ var app = new Vue({
     menu: {
       position : 1,
       list: [
-          {id: 1, path : "#oop", width: 120, name: 'Про мене' },
-          {id: 2, path : "#sp",  width: 130, name: 'Файли' },
-          {id: 3, path : "#pp",  width: 90,  name: 'Відео' },
-          {id: 4, path : "#pp",  width: 140, name: 'Фотогалерея' },
-          {id: 5, path : "#pp",  width: 200, name: 'Зворотній зв\'язок' },
-          {id: 6, path : "#pp",  width: 120, name: 'Різне' },
+          {id: 1, path : "oop", width: 120, name: 'Про мене' },
+          {id: 2, path : "sp",  width: 130, name: 'Файли' },
+          {id: 3, path : "pp",  width: 90,  name: 'Відео' },
+          {id: 4, path : "pp",  width: 140, name: 'Фотогалерея' },
+          {id: 5, path : "pp",  width: 200, name: 'Зворотній зв\'язок' },
+          {id: 6, path : "pp",  width: 120, name: 'Різне' },
       ],
     },
   },
@@ -54,8 +54,8 @@ var app = new Vue({
   },
     watch: {
     '$route': function (id) {
-      this.menu.position = id.path.replace('/','#');
-      location.reload();
+     // this.menu.position = id.path.replace('/','#');
+      //location.reload();
     }
   },
 })
