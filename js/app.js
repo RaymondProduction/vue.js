@@ -23,8 +23,8 @@ Vue.component('section-header', {
 Vue.component('menu-main',{
   props: ['menu','position'],
   template: '<table class="table-menu"><tr>'+
-            '  <td class="td" v-for="item in menu.list"  v-if="menu.position != item.path" v-bind:width = "item.width"><a  class="a" v-bind:href="item.path"> {{item.name}} </a></td>'+
-            '  <td class="td" style="background: #97D435;" v-for="item in menu.list"  v-if="menu.position == item.path" v-bind:width = "item.width"><a  class="a" v-bind:href="item.path"> {{item.name}} </a></td>'+
+            '  <td class="td" v-for="item in menu.list"  v-if="menu.position != item.path" v-bind:width = "item.width"> <router-link v-bind:to="item.path"> {{item.name}} </router-link></td>'+
+          //  '  <td class="td" style="background: #97D435;" v-for="item in menu.list"  v-if="menu.position == item.path" v-bind:width = "item.width"><a  class="a" v-bind:href="item.path"> {{item.name}} </a></td>'+
             '</tr></table>',
 });
 var app = new Vue({
@@ -45,6 +45,9 @@ var app = new Vue({
     },
   },
   methods: {
+    reload2: function(){
+       console.log('OK');
+    },
     menuPos: function () {
       this.menu.position=0;
     }
@@ -52,6 +55,7 @@ var app = new Vue({
     watch: {
     '$route': function (id) {
       this.menu.position = id.path.replace('/','#');
+      location.reload();
     }
   },
 })
