@@ -155,7 +155,12 @@ var app = new Vue({
         return camera.period === null || camera.archive === null;
       })
       if (problem == 0) {
-        console.log(this.camersFilter)
+        console.log(this.camersFilter);
+        $.post( "http://localhost:8080/", {
+          camers: this.camersFilter
+        }, function(response){
+          console.log('Respone:',response)
+        },'json');
       } else {
         console.log('Validation problem')
       }
