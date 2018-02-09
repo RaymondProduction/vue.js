@@ -158,8 +158,6 @@ var app = new Vue({
         console.log(this.camersFilter);
         $.post( "http://localhost:8080/", {
           camers: this.camersFilter
-        }, function(response){
-          console.log('Respone:',response)
         },'json');
       } else {
         console.log('Validation problem')
@@ -167,6 +165,11 @@ var app = new Vue({
     }
   },
   created() {
-    this.camersFilter = this.camers;
+    var _this = this;
+    $.get( "http://localhost:8080/camers/", function(camers) {
+      console.log('Get list of camers from server ',camers);
+      _this.camers = camers;
+      _this.camersFilter = _this.camers;
+    }, "json" );
   },
 })
