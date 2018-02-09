@@ -39,6 +39,18 @@ app.post('/',function(req,res){
     // });
 })
 
+app.post('/period',function(req,res){
+    console.log('Request==>',req.body);
+    var periods = [
+        {id : 1,  days: 31},
+        {id : 2, days: 20},
+        null,
+        {id : 4, days: 14},
+    ];
+    console.log('Response==>',JSON.stringify(periods[req.body.id-1]));
+     res.send(JSON.stringify(periods[req.body.id-1]));
+})
+
 app.get('/camers',function(req,res){
     console.log('Request==>',req.body);
     res.send(JSON.stringify([
@@ -50,7 +62,8 @@ app.get('/camers',function(req,res){
             description: 'Напрямок камери: Пішохідний перехід, кінотеатр Європа',
             private: false,
             period: null,
-            archive: null,          
+            archive: null,   
+            maxPeriod: null,       
           },
           {
             id: 2,
@@ -61,6 +74,7 @@ app.get('/camers',function(req,res){
             private: false,
             period: null,
             archive: null,
+            maxPeriod: null,
           },
           {
             id: 3,
@@ -69,7 +83,7 @@ app.get('/camers',function(req,res){
             street: 'Бориспіль,  Київський шлях, 47',
             description: 'Напрямок камери: Перехрестя вулиць Головатого та Київський шлях',
             private: false,
-           
+            maxPeriod: null,
             period: null,
             archive: null,
           },
@@ -80,7 +94,7 @@ app.get('/camers',function(req,res){
             street: 'Бориспіль,  Київський шлях, 3',
             description: 'Напрямок камери: Перехрестя вулиць Броварська та Київський шлях (в сторону центру міста)',
             private: false,
-           
+            maxPeriod: null,
             period: null,
             archive: null,
           }
