@@ -166,6 +166,7 @@ var app = new Vue({
   },
   created() {
     var _this = this;
+    _this.camersFilter = _this.camers;
     /*
     $.get( "http://localhost:8080/camers/", function(camers) {
       console.log('Get list of camers from server ',camers);
