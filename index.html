@@ -10,17 +10,38 @@
   <body>
     <div id="app">
       <input @keyUp= "filterOfCamers(street);" v-model="street" placeholder="Search by street">
-      <camera v-for="data in camersFilter" v-bind:data="data" name="test"/>
+      <camera v-for="camera in camersFilter" v-bind:camera="camera" v-bind:validation="validation"></camera>
+      <div>
+          <button v-on:click="validationAndGet">Get</button>
+      </div>
     </div>
     <script type="text/template" id="camera">
       <div>
-        <h1>{{data.name}}</h1>
+        <h1>{{camera.name}}</h1>
         <div>
-          <img v-bind:src="'./img/'+data.image+'.png'" v-bind:alt="data.image">
+          <img v-bind:src="'./img/'+camera.image+'.png'" v-bind:alt="camera.image">
         </div>
         <div>
-          <p><b>Street:</b>{{data.street}}</p>
-          <p><b>Description:</b>{{data.description}}</p>
+            <p v-if="validation && camera.period===null">You must select period!</p>
+            <select v-model="camera.period">
+                <option disabled value=null>Select period</option>
+                <option>1 month</option>
+                <option>2 month</option>
+                <option>3 minth</option>
+              </select>
+        </div>
+        <div>
+            <p v-if="validation && camera.archive === null">You must select period!</p>
+            <select v-model="camera.archive">
+                <option disabled value=null>Do you need archive?</option>
+                <option>YES</option>
+                <option>NO</option>
+                <option></option>
+              </select>
+        </div>
+        <div>
+          <p><b>Street:</b>{{camera.street}}</p>
+          <p><b>Description:</b>{{camera.description}}</p>
         </div>
       </div>
     </script>
