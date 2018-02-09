@@ -27,6 +27,7 @@ var app = new Vue({
     return {
       street: '',
       validation: false,
+      select: [],
       camers: [
         {
           id: 1,
@@ -36,7 +37,8 @@ var app = new Vue({
           description: 'Напрямок камери: Пішохідний перехід, кінотеатр Європа',
           private: false,
           period: null,
-          archive: null,          
+          archive: null,  
+          maxPeriod: null,        
         },
         {
           id: 2,
@@ -47,6 +49,7 @@ var app = new Vue({
           private: false,
           period: null,
           archive: null,
+          maxPeriod: null,  
         },
         {
           id: 3,
@@ -55,7 +58,7 @@ var app = new Vue({
           street: 'Бориспіль,  Київський шлях, 47',
           description: 'Напрямок камери: Перехрестя вулиць Головатого та Київський шлях',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -66,7 +69,7 @@ var app = new Vue({
           street: 'Бориспіль,  Київський шлях, 3',
           description: 'Напрямок камери: Перехрестя вулиць Броварська та Київський шлях (в сторону центру міста)',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -77,7 +80,7 @@ var app = new Vue({
           street: 'Бориспіль,  Київський шлях, 3',
           description: 'Напрямок камери: Перехрестя вулиць Броварська та Київський шлях (в сторону міста Київ)',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -88,7 +91,7 @@ var app = new Vue({
           street: 'Бориспіль,  Київський шлях, 76',
           description: 'Напрямок камери: Перехрестя вулиць Червонармійська та Київський шлях',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -99,7 +102,7 @@ var app = new Vue({
           street: 'Бориспіль, Київський шлях, 39',
           description: 'Напрямок камери: Перехрестя вулиць Горького та Київський шлях',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -110,7 +113,7 @@ var app = new Vue({
           street: 'Бориспіль, Київський шлях, 86',
           description: 'Напрямок камери: Перехрестя вулиць Дзержинського та Київський шлях (в сторону міста Харків)',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -121,7 +124,7 @@ var app = new Vue({
           street: 'Бориспіль, Київський шлях, 83',
           description: 'Напрямок камери: Перехрестя вулиць Дзержинського та Київський шлях (в сторону центру міста)',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
@@ -132,32 +135,37 @@ var app = new Vue({
           street: 'Бориспіль, Київський шлях 1/24',
           description: 'Напрямок камери: Перехрестя вулиць Київський шлях та Френкеля',
           private: false,
-         
+          maxPeriod: null,  
           period: null,
           archive: null,
         },
       ],
-      camersFilter: [],
     }
   },
   methods: {
-    filterOfCamers(street){
-      console.log('Run filters');
-      this.camersFilter = this.camers.filter(function(camera){
+    filter(camera, street){
+      console.log(this.validation);
+      if (this.validation){
+        return camera.archive !== null;
+      } else {
         return camera.street.search(new RegExp(street, 'i')) != -1;
-      })
-      console.log(this.camersFilter);
+      }
     },
     validationAndGet(){
+      var _this = this;
       console.log('Validation and get!');
+      this.street='';
       this.validation=true;
-      var problem = this.camersFilter.filter(function(camera){
-        return camera.period === null || camera.archive === null;
+      var problem = this.camers.filter(function(camera){
+        return camera.archive === "YES" && camera.period === null;
       })
-      if (problem == 0) {
-        console.log(this.camersFilter);
+      var select = this.camers.filter(function(camera){
+        return camera.archive!=null;
+      })
+      console.log('problem:',problem,' select: ',select);
+      if (problem.length == 0 && select.length >0) {
         $.post( "http://localhost:8080/", {
-          camers: this.camersFilter
+          camers: select
         },'json');
       } else {
         console.log('Validation problem')
@@ -166,13 +174,15 @@ var app = new Vue({
   },
   created() {
     var _this = this;
-    _this.camersFilter = _this.camers;
-    /*
     $.get( "http://localhost:8080/camers/", function(camers) {
+      $.map(camers, function(camera){
+        $.post( "http://localhost:8080/period", { id: camera.id }, function( period ) {
+            camera.maxPeriod = period; // null!!!
+            return camera;
+        }, "json");
+      })
       console.log('Get list of camers from server ',camers);
       _this.camers = camers;
-      _this.camersFilter = _this.camers;
     }, "json" );
-    */
   },
 })

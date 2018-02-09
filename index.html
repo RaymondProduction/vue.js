@@ -11,8 +11,8 @@
   </head>
   <body>
     <div id="app" class="form">
-      <input class="form-input" @keyUp= "filterOfCamers(street);" v-model="street" placeholder="Search by street">
-      <camera v-for="camera in camersFilter" v-bind:camera="camera" v-bind:validation="validation"></camera>
+      <input class="form-input" @keyUp="validation=false" v-model="street" placeholder="Search by street">
+      <camera v-for="camera in camers" v-if="filter(camera, street)" v-bind:camera="camera" v-bind:validation="validation"></camera>
       <div class="camera_info_button">
           <button class="nav_button" v-on:click="validationAndGet">Get</button>
       </div>
@@ -27,23 +27,24 @@
           <p class="camera_info_street">{{camera.street}}</p>
           <p class="camera_info_description">{{camera.description}}</p>
           <div style="clear:left">
-            <select class="camera_info" v-model="camera.period">
-                <option disabled value=null>Select period</option>
-                <option>1 month</option>
-                <option>2 month</option>
-                <option>3 minth</option>
-            </select>
-          </div>
-            <p class="camera_warning" v-if="validation && camera.period===null">You must select period!</p>
-            <div style="clear:left">
-            <select v-model="camera.archive">
+            <select  v-model="camera.archive">
                 <option disabled value=null>Do you need archive?</option>
-                <option>YES</option>
+                <option v-if="camera.maxPeriod!==null">YES</option>
                 <option>NO</option>
-                <option></option>
             </select>
           </div>
-            <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
+          <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
+          <div style="clear:left">
+            <select v-if="camera.archive==='YES'" class="camera_info" v-model="camera.period">
+                <option disabled value=null>Select period</option>
+                <option v-if="camera.maxPeriod.days >= 7">one week</option>
+                <option v-if="camera.maxPeriod.days >= 14">two weeks</option>
+                <option v-if="camera.maxPeriod.days >= 21">three weeks</option>
+                <option v-if="camera.maxPeriod.days >= 30">one month</option>
+                <option v-if="camera.maxPeriod.days >= 62">two months</option>
+            </select>
+          </div>
+          <p class="camera_warning" v-if="validation && camera.period===null && camera.archive==='YES'">You must select period!</p>
         </div>
       </div>
     </script>
