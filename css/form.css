@@ -1,0 +1,47 @@
+.img-container {
+    float: left;
+    margin-right: 15px;
+    width: 300px;
+    height: 209px;
+    contain: cover;
+    border: 1px solid #c2d9f1;
+}
+.form-input {
+    float: left;
+    color: #660000;
+    font-size: 18px;
+    padding: 3px;
+    border: 1px solid #c2d9f1;
+    background-color: #ffffff;
+    clear: left;
+    margin: 1em;
+}
+div.camera_info{
+    float: left;
+}
+select.camera_info {
+    clear: left;
+}
+p.camera_info_name, p.camera_info_street {
+    font-size: 18px;
+}
+p.camera_info_description {
+    font-size: 12px;
+}
+div.camera {
+    float: left;
+    clear: left;
+    width: 1200px;
+    margin-bottom: 1em;
+}
+div.camera_info_button {
+    float: left;
+    clear: left;
+    margin-bottom: 1em;
+}
+p.camera_warning {
+    display: inline-block;
+    margin: 5px;
+    float: left;
+    color: red;
+}

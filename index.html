@@ -3,46 +3,47 @@
   <head>
    <meta charset="utf-8">
      <link rel="stylesheet" href="./css/user.css">
+     <link rel="stylesheet" href="./css/form.css">
      <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
      <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
      <title>Form for select video camers</title>
   </head>
-  <body class="role_user">
-    <div id="app">
-      <input @keyUp= "filterOfCamers(street);" v-model="street" placeholder="Search by street">
+  <body>
+    <div id="app" class="form">
+      <input class="form-input" @keyUp= "filterOfCamers(street);" v-model="street" placeholder="Search by street">
       <camera v-for="camera in camersFilter" v-bind:camera="camera" v-bind:validation="validation"></camera>
-      <div>
+      <div class="camera_info_button">
           <button class="nav_button" v-on:click="validationAndGet">Get</button>
       </div>
     </div>
     <script type="text/template" id="camera">
-      <div class='div_height'>
+      <div class='camera'>
         <div class="img-container">
-          <img v-bind:src="'./img/'+camera.image+'.png'" v-bind:alt="camera.image"  width="200" height="139">
+          <img v-bind:src="'./img/'+camera.image+'.png'" v-bind:alt="camera.image"  width="300" height="209">
         </div>
-        <div class="div_height__content">
-          <p class="div_height__text">{{camera.name}}</p>
-          <p class="div_height__text">{{camera.street}}</p>
-          <p class="div_height__text">{{camera.description}}</p>
-        </div>
-        <div>
-            <p v-if="validation && camera.period===null">You must select period!</p>
-            <select v-model="camera.period">
+        <div class="camera_info">
+          <p class="camera_info_name">{{camera.name}}</p>
+          <p class="camera_info_street">{{camera.street}}</p>
+          <p class="camera_info_description">{{camera.description}}</p>
+          <div style="clear:left">
+            <select class="camera_info" v-model="camera.period">
                 <option disabled value=null>Select period</option>
                 <option>1 month</option>
                 <option>2 month</option>
                 <option>3 minth</option>
-              </select>
-        </div>
-        <div>
-            <p v-if="validation && camera.archive === null">You must select period!</p>
+            </select>
+          </div>
+            <p class="camera_warning" v-if="validation && camera.period===null">You must select period!</p>
+            <div style="clear:left">
             <select v-model="camera.archive">
                 <option disabled value=null>Do you need archive?</option>
                 <option>YES</option>
                 <option>NO</option>
                 <option></option>
-              </select>
+            </select>
+          </div>
+            <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
         </div>
       </div>
     </script>
