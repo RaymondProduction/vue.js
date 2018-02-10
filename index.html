@@ -20,13 +20,13 @@
     <script type="text/template" id="camera">
       <div class='camera'>
         <div class="img-container">
-          <img :src="'./img/'+camera.image+'.png'" :alt="camera.image"  width="300" height="209">
+          <img :src="camera._cam_scrin" :alt="camera.image"  width="300" height="209">
         </div>
         <div class="camera_info">
-          <p class="camera_info_name">{{camera.name}}</p>
-          <p class="camera_info_street">{{camera.street}}</p>
-          <p class="camera_info_description">{{camera.description}}</p>
-          <div style="clear:left">
+          <p class="camera_info_name">Camera {{camera.uid}}</p>
+          <p class="camera_info_street">{{camera._adr_city}} {{camera._adr_street}}</p>
+          <p class="camera_info_description">{{camera.comment}}</p>
+       <!--   <div style="clear:left">
             <select  v-model="camera.archive">
                 <option disabled value=''>Do you need archive?</option>
                 <option v-if="camera.archive!=''" value=''>Remove selection</option>
@@ -46,7 +46,7 @@
             </select>
           </div>
           <p class="camera_warning" v-if="validation && camera.period===null && camera.archive==='YES'">You must select period!</p>
-        </div>
+        </div>-->
       </div>
     </script>
    <script src="./js/app.js"></script>

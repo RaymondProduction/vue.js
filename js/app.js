@@ -28,19 +28,58 @@ var app = new Vue({
       street: '',
       validation: false,
       select: [],
-      camers: [
+      camers: [],/* [
         {
-          id: 1,
-          image: '32',
-          name: 'Camera 1',
-          street: 'Бориспіль,  Київський шлях, 71',
-          description: 'Напрямок камери: Пішохідний перехід, кінотеатр Європа',
-          private: false,
-          period: null,
-          archive: '',  
-          maxPeriod:  {id : 9,  days: 31},        
-        },
+            "_cam_status":"1",
+                      "_fixedconnect":"",
+                        "_adr_router":"",
+                         "_cam_7_day":"0",
+                       "_adr_paradne":"",
+                   "_adr_dop_telefon":"",
+                         "_adr_email":"",
+                        "_cam_31_day":"0",
+                           "_id_firm":"",
+                        "_cam_14_day":"1",
+                             "dvr_no": {			
+                "1":"1 День",      
+                "31":"Месяц",
+                "14":"2 Недели",
+                "7":"1 Неделя"
+                },
+               "id":6848,
+               "_adr_telefon":"",
+                  "uid":6872, 
+                 "_oneconnect":"",
+                 "_adr_router_name":"",
+                 "_block_capremind":"",
+                 "_adr_group":"",
+                  "_adr_city":"Бориспіль",
+                 "_id_identifi_kod":"",
+                  "_adr_room":"",
+                "_id_passport_date":"",
+                    "dvr_yes": {	
+                    "14":"2 недели"
+                   },
+                  "_cam_type":"",
+                 "_cam_1_day":"0",
+               "_id_passport_place":""
+                ,"_adr_house":"2"
+                ,"_adr_floor":"",
+                 "_cam_scrin":"http://test.my.monolith.net.ua/files/6872_1510920989_5550902856.jpg"
+              ,"_id_passport":"",
+                "_adr_street":"Київський шлях",
+                    "comment":"камера знаходится там то там то", 
+                 "_adr_router_nash":"",
+                 "_adr_place":"",
+        }
+      ,
+      
         {
+
+          "_adr_street":"Київський шлях",
+      
+        },*/
+       /* {
           id: 2,
           image: '21',
           name: 'Camera 2',
@@ -139,16 +178,22 @@ var app = new Vue({
           period: null,
           archive: '',
         },
-      ],
+      ],*/
     }
   },
   methods: {
     filter(camera, street){
       console.log(this.validation);
+      console.log(this.camers)
       if (this.validation){
         return camera.archive !== '';
       } else {
-        return camera.street.search(new RegExp(street, 'i')) != -1;
+        return (
+            camera._adr_street + ' '
+           + camera.comment + ' '
+           + camera._adr_city +' '
+           + camera.uid
+        ).search(new RegExp(street, 'i')) != -1;
       }
     },
     validationAndGet(){
@@ -174,14 +219,9 @@ var app = new Vue({
   },
   created() {
     var _this = this;
-    $.get( "http://localhost:8080/camers/", function(camers) {
-      $.map(camers, function(camera){
-        $.post( "http://localhost:8080/period", { id: camera.id }, function( period ) {
-            camera.maxPeriod = period; // null!!!
-            return camera;
-        }, "json");
-      })
-      console.log('Get list of camers from server ',camers);
+    $.get( "http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_active_camers&type_camera=public", function(camers) {
+      //_this.camers = [1,2,3];
+      console.log('Get list of camers from server ', _this.camers);
       _this.camers = camers;
     }, "json" );
   },
