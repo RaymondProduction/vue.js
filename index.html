@@ -4,15 +4,18 @@
    <meta charset="utf-8">
      <link rel="stylesheet" href="./css/user.css">
      <link rel="stylesheet" href="./css/form.css">
-     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script src="./js/lib/vue.js"></script>
+     <script src="./js/lib/jquery-3.3.1.min.js"></script>
      <title>Form for select video camers</title>
   </head>
   <body>
     <div id="app" class="form">
       <input class="form-input" @keyUp="validation=false" v-model="street" placeholder="Search by street">
-      <camera v-for="camera in camers" v-if="filter(camera, street)" :camera="camera" :validation="validation"></camera>
+      <h1 style="clear:left">Public camers</h1>
+      <camera v-for="camera in camersPublic" v-if="filter(camera, street)" :camera="camera" :validation="validation"></camera>
+      <hr style="clear: left">
+      <h1>Privat camers</h1>
+      <camera v-for="camera in camersPrivate" v-if="filter(camera, street)" :camera="camera" :validation="validation"></camera>
       <div class="camera_info_button">
           <button class="nav_button" v-on:click="validationAndGet">Get</button>
       </div>
@@ -26,28 +29,26 @@
           <p class="camera_info_name">Camera {{camera.uid}}</p>
           <p class="camera_info_street">{{camera._adr_city}} {{camera._adr_street}}</p>
           <p class="camera_info_description">{{camera.comment}}</p>
-       <!--   <div style="clear:left">
-            <select  v-model="camera.archive">
-                <option disabled value=''>Do you need archive?</option>
-                <option v-if="camera.archive!=''" value=''>Remove selection</option>
-                <option v-if="camera.maxPeriod!==null && camera.maxPeriod.days >= 7">YES</option>
-                <option>NO</option>
-            </select>
+          <div style="clear:left">
+              <select  v-model="camera.a" @change="camera.p=0">
+                  <option disabled value=''>Do you need archive?</option>
+                  <option v-if="camera.a!=''" value=''>Remove selection</option>
+                  <option v-if="camera.drv_yes!=0">YES</option>
+                  <option v-if="camera.drv_no!=0">NO</option>
+              </select>
           </div>
           <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
           <div style="clear:left">
-            <select v-if="camera.archive==='YES'" class="camera_info" v-model="camera.period">
-                <option disabled value=null>Select period</option>
-                <option v-if="camera.maxPeriod.days >= 7">one week</option>
-                <option v-if="camera.maxPeriod.days >= 14">two weeks</option>
-                <option v-if="camera.maxPeriod.days >= 21">three weeks</option>
-                <option v-if="camera.maxPeriod.days >= 30">one month</option>
-                <option v-if="camera.maxPeriod.days >= 62">two months</option>
+            <select v-if="camera.a!==''" class="camera_info" v-model="camera.p">
+                <option disabled value=0>Select period</option>
+                <option v-if="camera.a=='YES'" v-for="period in camera.dvr_yes" :value="period.number">{{period.name}}</option>
+                <option v-if="camera.a=='NO'" v-for="period in camera.dvr_no" :value="period.number">{{period.name}}</option>
             </select>
           </div>
-          <p class="camera_warning" v-if="validation && camera.period===null && camera.archive==='YES'">You must select period!</p>
-        </div>-->
+          <p class="camera_warning" v-if="validation && camera.p===0 && camera.a!==''">You must select period!</p>
+          </div>
       </div>
+
     </script>
    <script src="./js/app.js"></script>
 
