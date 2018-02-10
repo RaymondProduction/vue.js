@@ -23,7 +23,6 @@ var app = new Vue({
   },
   methods: {
     filter(camera, street){
-      console.log(this.validation);
       if (this.validation){
         return camera.a!== '';
       } else {
@@ -63,8 +62,6 @@ var app = new Vue({
           name: periods[number]
         })
       }
-      console.log(result );
-      
       return result;
     }
   },
