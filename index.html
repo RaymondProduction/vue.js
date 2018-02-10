@@ -12,7 +12,7 @@
   <body>
     <div id="app" class="form">
       <input class="form-input" @keyUp="validation=false" v-model="street" placeholder="Search by street">
-      <camera v-for="camera in camers" v-if="filter(camera, street)" v-bind:camera="camera" v-bind:validation="validation"></camera>
+      <camera v-for="camera in camers" v-if="filter(camera, street)" :camera="camera" :validation="validation"></camera>
       <div class="camera_info_button">
           <button class="nav_button" v-on:click="validationAndGet">Get</button>
       </div>
@@ -20,7 +20,7 @@
     <script type="text/template" id="camera">
       <div class='camera'>
         <div class="img-container">
-          <img v-bind:src="'./img/'+camera.image+'.png'" v-bind:alt="camera.image"  width="300" height="209">
+          <img :src="'./img/'+camera.image+'.png'" :alt="camera.image"  width="300" height="209">
         </div>
         <div class="camera_info">
           <p class="camera_info_name">{{camera.name}}</p>
@@ -28,8 +28,9 @@
           <p class="camera_info_description">{{camera.description}}</p>
           <div style="clear:left">
             <select  v-model="camera.archive">
-                <option disabled value=null>Do you need archive?</option>
-                <option v-if="camera.maxPeriod!==null">YES</option>
+                <option disabled value=''>Do you need archive?</option>
+                <option v-if="camera.archive!=''" value=''>Remove selection</option>
+                <option v-if="camera.maxPeriod!==null && camera.maxPeriod.days >= 7">YES</option>
                 <option>NO</option>
             </select>
           </div>

@@ -62,7 +62,7 @@ app.get('/camers',function(req,res){
             description: 'Напрямок камери: Пішохідний перехід, кінотеатр Європа',
             private: false,
             period: null,
-            archive: null,   
+            archive: '',   
             maxPeriod: null,       
           },
           {
@@ -73,7 +73,7 @@ app.get('/camers',function(req,res){
             description: 'Напрямок камери: Перехрестя вулиць Лютнева та Київський шлях',
             private: false,
             period: null,
-            archive: null,
+            archive: '',
             maxPeriod: null,
           },
           {
@@ -85,7 +85,7 @@ app.get('/camers',function(req,res){
             private: false,
             maxPeriod: null,
             period: null,
-            archive: null,
+            archive: '',
           },
           {
             id: 4,
@@ -96,7 +96,7 @@ app.get('/camers',function(req,res){
             private: false,
             maxPeriod: null,
             period: null,
-            archive: null,
+            archive: '',
           }
     ]));
     
