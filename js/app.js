@@ -47,9 +47,9 @@ var app = new Vue({
       })
       console.log('problem:',problem,' select: ',select);
       if (problem.length == 0 && select.length >0) {
-        $.post( "http://localhost:8080/", {
-          camers: select
-        },'json');
+        // $.post( "http://localhost:8080/", {
+        //   camers: select
+        // },'json');
       } else {
         console.log('Validation problem')
       }
