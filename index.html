@@ -39,7 +39,7 @@
               </select>
           </div>
           <div v-else>
-              <p class="camera_info_street">
+              <p :style="isWarning()" class="camera_info_street">
                   Подключеная услуга {{warning.description}}</br>
                   , услуга заканчивается через  {{warning.end_services}}
 
