@@ -38,7 +38,6 @@
                   <option v-if="camera.drv_no!=0">NO</option>
               </select>
           </div>
-          <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
           <div v-else>
               <p class="camera_info_street">
                   Подключеная услуга {{warning.description}}</br>
@@ -46,6 +45,7 @@
 
               </p>
           </div>
+          <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
           <div v-if="!isUsedCamera()" style="clear:left">
             <select v-if="camera.a!==''" class="camera_info" v-model="camera.p">
                 <option disabled value=0>Select period</option>
