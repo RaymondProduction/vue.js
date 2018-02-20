@@ -13,12 +13,19 @@ Vue.component('camera', {
     warning: {
       type : Object,
       default: function(){
-        var i = _.findIndex(this.selected, (cameraSelected)=>cameraSelected.camera == this.camera.uid.toString() );
-        if (i>-1)
-        return {
-          description: this.selected[i].description,
-          end_services: this.selected[i].end_services,
-          next_service_id : new Date(this.selected[i].next_service_id)
+        var i = _.findIndex(this.selected, (cameraSelected)=>cameraSelected.uid == this.camera.uid.toString() );
+        if (i>-1) {
+          var d = new Date(this.selected[i].end_services);
+          var date = d.getDate();
+          var month = d.getMonth() + 1;
+          var year = d.getFullYear();
+          var t = date + "."+ month + "." + year + "." ;
+          return {
+            description: this.selected[i].description,
+            end_services: t,
+            next_service_id: this.selected[i].next_service_id,
+            days: this.selected[i].days,
+          }
         }
         else return {};
       }
@@ -26,7 +33,7 @@ Vue.component('camera', {
   },
   methods: {
     isUsedCamera(){
-      return -1 < _.findIndex(this.selected, (cameraSelected)=>cameraSelected.camera == this.camera.uid.toString() );
+      return -1 < _.findIndex(this.selected, (cameraSelected)=>cameraSelected.uid == this.camera.uid.toString() );
     },
     isWarning(){
       if (this.isUsedCamera()) {
@@ -117,9 +124,9 @@ var app = new Vue({
     $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=checking_serv&user_uid=320", function(camers){
       console.log('Get list of selected camers ', camers);
       _this.selected = camers;
-      console.log('test',_.findIndex(camers, function(camera){
-        return camera.camera == "6873";
-      }));
+      // console.log('test',_.findIndex(camers, function(camera){
+      //   return camera.camera == "6873";
+      // }));
 
     },"json");
 
