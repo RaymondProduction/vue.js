@@ -45,7 +45,7 @@
               <p :style="isWarning()" class="camera_info_description">
                   <b>Услуга заканчивается:</b> {{warning.end_services}}
               </p>
-              <p style="color: green" class="camera_info_description" v-if="warning.next_service_id == 0">
+              <p style="color: green" class="camera_info_description" v-if="warning.next_service_id != 0">
                   <b>Следующая услуга:</b> {{warning.description}} {{warning.days}}
               </p>
             </p>
