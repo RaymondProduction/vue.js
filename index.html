@@ -38,12 +38,17 @@
                   <option v-if="camera.drv_no!=0">NO</option>
               </select>
           </div>
-          <div v-else>
-              <p :style="isWarning()" class="camera_info_street">
-                  Подключеная услуга {{warning.description}} {{warning.days}}</br>
-                  , услуга заканчивается через  {{warning.end_services}}
-
+          <div v-else style="clear:left">
+              <p :style="isWarning()" class="camera_info_description">
+                  <b>Подключеная услуга:</b> {{warning.description}} {{warning.days}} 
               </p>
+              <p :style="isWarning()" class="camera_info_description">
+                  <b>Услуга заканчивается:</b> {{warning.end_services}}
+              </p>
+              <p style="color: green" class="camera_info_description" v-if="warning.next_service_id == 0">
+                  <b>Следующая услуга:</b> {{warning.description}} {{warning.days}}
+              </p>
+            </p>
           </div>
           <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
           <div v-if="!isUsedCamera()" style="clear:left">
