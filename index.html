@@ -31,11 +31,11 @@
           <p :style="isWarning()" class="camera_info_street">{{camera._adr_city}} {{camera._adr_street}}</p>
           <p :style="isWarning()" class="camera_info_description">{{camera.comment}}</p>
           <div v-if="!isUsedCamera()" style="clear:left">
-              <select  v-model="camera.a" @change="camera.p=0">
+              <select  v-model="camera.dvr" @change="camera.p=0">
                   <option disabled value=''>Do you need archive?</option>
-                  <option v-if="camera.a!=''" value=''>Remove selection</option>
-                  <option v-if="camera.drv_yes!=0">YES</option>
-                  <option v-if="camera.drv_no!=0">NO</option>
+                  <option v-if="camera.dvr!=''" value=''>Remove selection</option>
+                  <option v-if="camera.drv_yes!=0" value="yes">YES</option>
+                  <option v-if="camera.drv_no!=0" value="no">NO</option>
               </select>
           </div>
           <div v-else style="clear:left">
@@ -50,15 +50,15 @@
               </p>
             </p>
           </div>
-          <p class="camera_warning" v-if="validation && camera.archive === null">Can you use archive?</p>
+          <p class="camera_warning" v-if="validation && camera.dvrrchive === null">Can you use archive?</p>
           <div v-if="!isUsedCamera()" style="clear:left">
-            <select v-if="camera.a!==''" class="camera_info" v-model="camera.p">
+            <select v-if="camera.dvr!==''" class="camera_info" v-model="camera.p">
                 <option disabled value=0>Select period</option>
-                <option v-if="camera.a=='YES'" v-for="period in camera.dvr_yes" :value="period.number">{{period.name}}</option>
-                <option v-if="camera.a=='NO'" v-for="period in camera.dvr_no" :value="period.number">{{period.name}}</option>
+                <option v-if="camera.dvr=='yes'" v-for="period in camera.dvr_yes" :value="period.number">{{period.name}}</option>
+                <option v-if="camera.dvr=='no'" v-for="period in camera.dvr_no" :value="period.number">{{period.name}}</option>
             </select>
           </div>
-          <p class="camera_warning" v-if="validation && camera.p===0 && camera.a!==''">You must select period!</p>
+          <p class="camera_warning" v-if="validation && camera.p===0 && camera.dvr!==''">You must select period!</p>
           </div>
       </div>
 

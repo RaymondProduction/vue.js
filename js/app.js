@@ -59,7 +59,7 @@ var app = new Vue({
   methods: {
     filter(camera, street){
       if (this.validation){
-        return camera.a!== '';
+        return camera.dvr!== '';
       } else {
         return (
             camera._adr_street + ' '
@@ -75,12 +75,12 @@ var app = new Vue({
       this.street='';
       this.validation=true;
       var problem = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
-        return camera.a === 'YES' && camera.p === 0 && camera.d;
+        return camera.dvr === 'yes' && camera.p === 0 && camera.d;
       })
       console.log(this.camersPublic,'',this.camersPrivate)
       var select = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
-        console.log(camera,' ', camera.a!='')
-        return camera.a=='YES' || camera.a=='NO';
+        console.log(camera,' ', camera.dvr!='')
+        return camera.dvr=='yes' || camera.dvr=='no';
       })
       console.log('problem:',problem,' select: ',select);
       if (problem.length == 0 && select.length >0) {
@@ -94,20 +94,21 @@ var app = new Vue({
           dataType:'json'
        }).done(function(data) {
        var aaa = $.map(select, function(camera){
-          camera.a='';
-          camera.p=0;
-          camera.dvr_yes = _this.parsePeriod(camera.dvr_yes);
-          camera.dvr_no = _this.parsePeriod(camera.dvr_no);
           return {
             ip: data.ip,
             uid_user: 320,
             uid_camera: camera.uid,
             type: "public",
-            dvr: camera.a
+            dvr: camera.dvr,
+            period: camera.p,
           };
         });
-        console.log(aaa);
-        debugger;
+        console.log('Send to server',JSON.stringify(aaa));
+        $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_price_and_parameters&camers="+ JSON.stringify(aaa),  )
+    .done(function(data) {
+    console.log("Data Loaded: " + data);
+    });
+       // debugger;
        });
         
       } else {
@@ -129,7 +130,7 @@ var app = new Vue({
     var _this = this;
     function refactoring(camers){
       camers = $.map(camers, function(camera){
-        camera.a='';
+        camera.dvr='';
         camera.p=0;
         camera.dvr_yes = _this.parsePeriod(camera.dvr_yes);
         camera.dvr_no = _this.parsePeriod(camera.dvr_no);
@@ -150,11 +151,6 @@ var app = new Vue({
     $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_serv_price&user_uid=320", { "ip":"91.209.64.30", "uid_user":"320", "uid_camera":"6873", "type":"public", "dvr":"no", "period": "31" } ,function(t){
       console.log('DATA:',t);
     },"json");
-    sendD = '[ { "ip":"91.209.64.30", "uid_user":"320", "uid_camera":"6873", "type":"public", "dvr":"no", "period": "31" } ]';
-    $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_price_and_parameters&camers="+sendD,  )
-.done(function(data) {
-console.log("Data Loaded: " + data);
-});
 
     $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=checking_serv&user_uid=320", function(camers){
       console.log('Get list of selected camers ', camers);
