@@ -50,10 +50,12 @@ var app = new Vue({
     return {
       street: '',
       validation: false,
+      verification: false,
       select: [],
       selected: [1,2,3],
       camersPublic: [],
       camersPrivate: [],
+      camersVerification: [],
     }
   },
   methods: {
@@ -105,10 +107,15 @@ var app = new Vue({
         });
         console.log('Send to server',JSON.stringify(aaa));
         $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_price_and_parameters&camers="+ JSON.stringify(aaa),  )
-    .done(function(data) {
-    console.log("Data Loaded: " + data);
-    });
-       // debugger;
+          .done(function(data) {
+          console.log("Data Loaded: " + data);
+          if (data.search('Error')>-1) {
+            alert('Ответ от сервера с ошибкой:'+data);
+          } else {
+            _this.camersVerification = JSON.parse(data);
+            _this.verification = true;
+          }
+        });
        });
         
       } else {

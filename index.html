@@ -11,15 +11,62 @@
   </head>
   <body>
     <div id="app" class="form">
-      <input class="form-input" @keyUp="validation=false" v-model="street" placeholder="Search by street">
-      <h1 style="clear:left">Public camers</h1>
-      <camera v-for="camera in camersPublic" v-if="filter(camera, street)"  :selected = "selected" :camera="camera" :validation="validation"></camera>
-      <hr style="clear: left">
-      <h1>Privat camers</h1>
-      <camera v-for="camera in camersPrivate" v-if="filter(camera, street)" :selected = "selected" :camera="camera" :validation="validation"></camera>
-      <div class="camera_info_button">
-          <button class="nav_button" v-on:click="validationAndGet">Get</button>
-      </div>
+        <div v-if="!verification">
+            <input class="form-input" @keyUp="validation=false" v-model="street" placeholder="Search by street">
+            <h1 style="clear:left">Public camers</h1>
+            <camera v-for="camera in camersPublic" v-if="filter(camera, street)"  :selected = "selected" :camera="camera" :validation="validation"></camera>
+            <hr style="clear: left">
+            <h1>Privat camers</h1>
+            <camera v-for="camera in camersPrivate" v-if="filter(camera, street)" :selected = "selected" :camera="camera" :validation="validation"></camera>
+            <div class="camera_info_button">
+                <button class="nav_button" v-on:click="validationAndGet">Get</button>
+            </div>
+        </div>
+        <div v-else>
+                <p class="camera_info_name">Відповідь від сервера => {{camersVerification}}</p>
+                <p class="camera_info_name">Ви підтверджуєте вибір:</p>
+                <div class='camera' v-for="camera in camersVerification">
+                    <div class="img-container">
+                            <img :src="camera.camera_info._cam_scrin" :alt="camera.image"  width="300" height="209">
+                    </div>
+                    <div class="camera_info">
+                        <p class="camera_info_name">Camera {{camera.uid_camera}}</p>
+                        <div v-if="camera.period==31">
+                            <p class="camera_info_description">{{camera.description}}</p>
+                            <p class="camera_info_description">Повна вартість послуги: {{camera.total_price}}</p>
+                                <div  v-if="camera.user_discount > 0 ">
+                                    <p v-if="camera.last_day_k < 1"class="camera_info_description">
+                                        Ваша знижка: {{camera.user_discount}}% 
+                                        Так як ви користуєтесь ЦЕЙ місяць не повністю, абонплату буде перераховано.</br> 
+                                        Всього до сплати {{camera.cash}} грн.
+                                    </p>
+                                    <p v-else class="camera_info_description">
+                                        Ваша знижка {{camera.user_discount}}% Всього до сплати {{camera.cash}} грн.
+                                    </p>
+                                </div>
+                                <div v-else>
+                                        <p v-if="camera.last_day_k < 1"class="camera_info_description">
+                                            Так як ви користуєтесь ЦЕЙ місяць не повністю, абонплату буде перераховано. Всього до сплати {{camera.cash}} грн.
+                                        </p>
+                                        <p v-else class="camera_info_description">
+                                                Всього до сплати {{camera.cash}} грн.
+                                        </p>
+                                </div>
+                        </div>
+                        <div v-else>
+                                <p class="camera_info_description">{{camera.description}}</p>
+                                <p class="camera_info_description">Кількість днів: {{camera.total_price}}</p>
+                                <p class="camera_info_description">Повна вартість послуги: {{camera.total_price}}</p>
+                                <p v-if="camera.user_discount > 0 " class="camera_info_description">
+                                        Ваша знижка {{camera.user_discount}}% Всього до сплати {{camera.cash}} грн.
+                                </p>
+                                <p v-else class="camera_info_description">
+                                        Всього до сплати {{camera.cash}} грн.
+                                </p>
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
     <script type="text/template" id="camera">
       <div class='camera'>
