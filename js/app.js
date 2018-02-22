@@ -6,9 +6,6 @@ Vue.component('camera', {
     },
     camera: {
       type: Object,
-      default: function () {
-        return { archive: 'привет!' }
-      }
     },
     warning: {
       type : Object,
@@ -80,14 +77,39 @@ var app = new Vue({
       var problem = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
         return camera.a === 'YES' && camera.p === 0 && camera.d;
       })
+      console.log(this.camersPublic,'',this.camersPrivate)
       var select = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
-        return camera.a!='';
+        console.log(camera,' ', camera.a!='')
+        return camera.a=='YES' || camera.a=='NO';
       })
       console.log('problem:',problem,' select: ',select);
       if (problem.length == 0 && select.length >0) {
         // $.post( "http://localhost:8080/", {
         //   camers: select
         // },'json');
+        // Get ip address of client from  freegeoip.net
+        $.ajax({
+          url:'http://freegeoip.net/json/',
+          type:'get',
+          dataType:'json'
+       }).done(function(data) {
+       var aaa = $.map(select, function(camera){
+          camera.a='';
+          camera.p=0;
+          camera.dvr_yes = _this.parsePeriod(camera.dvr_yes);
+          camera.dvr_no = _this.parsePeriod(camera.dvr_no);
+          return {
+            ip: data.ip,
+            uid_user: 320,
+            uid_camera: camera.uid,
+            type: "public",
+            dvr: camera.a
+          };
+        });
+        console.log(aaa);
+        debugger;
+       });
+        
       } else {
         console.log('Validation problem')
       }
@@ -122,6 +144,17 @@ var app = new Vue({
       })
       return camers;
     }
+    //get_serv_price
+    //get_param
+    //get_reason
+    $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_serv_price&user_uid=320", { "ip":"91.209.64.30", "uid_user":"320", "uid_camera":"6873", "type":"public", "dvr":"no", "period": "31" } ,function(t){
+      console.log('DATA:',t);
+    },"json");
+    sendD = '[ { "ip":"91.209.64.30", "uid_user":"320", "uid_camera":"6873", "type":"public", "dvr":"no", "period": "31" } ]';
+    $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=get_price_and_parameters&camers="+sendD,  )
+.done(function(data) {
+console.log("Data Loaded: " + data);
+});
 
     $.get("http://test.my.monolith.net.ua/cgi-bin/camers.pl?method=checking_serv&user_uid=320", function(camers){
       console.log('Get list of selected camers ', camers);
