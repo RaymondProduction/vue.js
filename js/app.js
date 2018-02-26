@@ -77,7 +77,7 @@ var app = new Vue({
       this.street='';
       this.validation=true;
       var problem = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
-        return camera.dvr === 'yes' && camera.p === 0 && camera.d;
+        return (camera.dvr === 'yes' || camera.dvr === 'no')&& camera.p === 0;
       })
       console.log(this.camersPublic,'',this.camersPrivate)
       var select = this.camersPublic.concat(this.camersPrivate).filter(function(camera){
@@ -86,10 +86,6 @@ var app = new Vue({
       })
       console.log('problem:',problem,' select: ',select);
       if (problem.length == 0 && select.length >0) {
-        // $.post( "http://localhost:8080/", {
-        //   camers: select
-        // },'json');
-        // Get ip address of client from  freegeoip.net
         $.ajax({
           url:'http://freegeoip.net/json/',
           type:'get',
